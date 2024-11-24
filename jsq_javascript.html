@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算器</title>
+    <!-- CSS样式 -->
+    <style>
+        #top{
+            width: 450px;
+            height: 50px;
+            margin: auto;
+            background-color: grey;
+            border-top-right-radius:10px; 
+            border-top-left-radius: 10px;
+        }
+        #top .point{
+            width: 20px;
+            height: 20px;
+            float: left;
+            margin-left: 10px ;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+        #top .red{
+            background-color: red;
+        }
+        #top .blue{
+            background-color: blue;
+        }
+        #top .green{
+            background-color: green;
+        }
+        #calc-title{
+            font-size: 22px;
+            color: white;
+            float: right;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+        #result{
+            width: 446px;
+            height: 50px;
+            margin: auto;
+            background-color: white;
+            border: solid 2px red;
+            text-align: right;
+            font-size: 30px;
+        }
+        #button{
+            width: 450px;
+            height: 422px;
+            background-color: gray;
+            margin: auto;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        #button div{
+            width: 108px;
+            height: 80px;
+            float: left;
+            background-color: aqua;
+            margin: 2px;
+            line-height: 80px;
+            text-align: center;
+            font-size: 26px;
+        }
+        /* 使用伪类选择器设置鼠标悬停*/
+        #button div:hover{
+
+            background-color: hotpink;
+        }
+    </style>
+    <!-- JavaScript样式 -->
+     <script type="text/javascript">
+        //获取一个元素（定位、选择）
+        // 定义一个变量，使用var声明，并给它赋值为计算器的标题，innerHTML为该元素的属性
+        function alertTitle(){
+         // 函数体中，变量之前加var，表示当前函数内部的局部变量，否则为全局，建议加var
+         var calTitle=document.getElementById("calc-title").innerHTML;
+         window.alert(calTitle);
+        //  console.log("Function alertTitle is called");
+        }
+        // 传递函数参数，用于输入的哪个数字
+        function clickNumber(number){
+            var result=document.getElementById("result");
+            var string=result.innerHTML;
+            // 如果结果为0，且输入的不是小数点，则替换结果
+            if(string==="0" && number!="."){
+                result.innerHTML=number;
+            }
+            else{
+                result.innerHTML+=number;
+            }
+        }
+        //显示输入到运算符
+        function clickOperator(operatorDisplay, operatorActual) {
+    var result = document.getElementById("result");
+    var string = result.innerHTML;
+    var len = string.length;
+    var last = string.charAt(len - 1);
+    
+    // 检查最后一个字符是否为运算符，如果是，则替换
+    if (last === "+" || last === "-" || last === "*" || last === "/" || last === "%" || last === ".") {
+        var temp = string.substr(0, len - 1) + operatorDisplay;
+        result.innerHTML = temp;
+    } else {
+        result.innerHTML += operatorDisplay;
+    }
+}
+
+        //计算结果
+        function doCalc(){
+        var result = document.getElementById("result");
+        var expression = result.innerHTML;
+        // 替换显示的“÷”为实际的“/”运算符
+        expression = expression.replace(/÷/g, '/');
+        result.innerHTML = eval(expression);
+    }
+        //清空
+        function doClear(){
+            var result=document.getElementById("result");
+            result.innerHTML="";
+        }
+        //退格
+        function doBack(){
+            var result=document.getElementById("result");
+            var len=result.innerHTML.length;//获取字符串长度
+            result.innerHTML=result.innerHTML.substr(0,len-1);
+
+        }
+        //获取最后一个字符
+        function getLastChar(){
+            var result=document.getElementById("result");
+            var string=result.innerHTML;
+            var len=string.length;
+            var last=string.charAt(len-1);
+            if(last=="+"||last=="-"||last=="*"||last=="/"||last=="%"){
+                var temp=string.substr(0,len-1)+'x';
+               window.alert(temp);
+            }
+        }
+
+      //JS中通过其他方式获取元素
+      //   document.getElementsByClassName("point") //得到三个class=point的元素 
+      //   document.getElementsByName("resul");//得到name=resul的元素
+      //   document.getElementsByTagName("div");
+      //JS也可以通过Xpath来定义  
+       
+     </script>
+</head>
+<!-- onload元素事件，页面加载完成后 -->
+<body onload="alertTitle()">
+    <div id="top">
+    <div class="point red"></div>
+    <div class="point blue"></div>
+    <div class="point green"></div>
+    <div id="calc-title">计算器</div>
+    </div>
+
+    <div id="result" name="result"></div>
+
+    <div id="button">
+        <div onclick="doClear()">AC</div>
+        <div onclick="getLastChar()">功能</div>
+        <div onclick="clickOperator('%')">%</div>
+        <div onclick="clickOperator('÷', '/')">÷</div>
+        <div onclick="clickNumber(7)">7</div>
+        <div onclick="clickNumber(8)">8</div>
+        <div onclick="clickNumber(9)">9</div>
+        <div onclick="clickOperator('*')">*</div>
+        <div onclick="clickNumber(4)">4</div>
+        <div onclick="clickNumber(5)">5</div>
+        <div onclick="clickNumber(6)">6</div>
+        <div onclick="clickOperator('-')">-</div>
+        <div onclick="clickNumber(1)">1</div>
+        <div onclick="clickNumber(2)">2</div>
+        <div onclick="clickNumber(3)">3</div>
+        <div onclick="clickOperator('+')">+</div>
+        <div onclick="clickNumber(0)">0</div>
+        <div onclick="doBack()">删除</div>
+        <div onclick="clickOperator('.')">.</div>
+        <div onclick="doCalc()">=</div>
+    </div> 
+</body>
+</html>
